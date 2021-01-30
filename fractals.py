@@ -1,4 +1,5 @@
 import random
+import math
 
 class Sierpinski:
     def __init__(self, c, width, height):
@@ -62,3 +63,43 @@ class Barnsley:
                 self.points += [self.canvas.create_oval(oX+new_point[0], oY-new_point[1], oX+new_point[0]+3, oY-new_point[1]+3,fill="blue")]
             self.curr_point = new_point
             num_iter -= 1
+
+class Koch:
+    def __init__(self, c, width, height):
+        self.canvas = c
+        self.points = [(50, height/2), (width-50, height/2)]
+        self.line = c.create_line(self.points, width=1, fill="green")
+
+    def step(self):
+        index = 1
+        while index < len(self.points):
+            start = self.points[index-1]
+            end = self.points[index]
+            #the 1/3 point we will use as an origin
+            third = ((end[0]-start[0])/3+start[0], (end[1]-start[1])/3+start[1])
+            #we will rotate a copy of the 2/3 point 60 degrees so that its adj component is div by half, creating symmetric triangles
+            twothird = ((end[0]-start[0])*(2/3)+start[0], (end[1]-start[1])*(2/3)+start[1])
+
+            #y is negated b/c y in our coordinate system grows down
+            toRot = (twothird[0]-third[0],-(twothird[1]-third[1]))
+
+            thet = math.pi/3
+            #y is negated again from standard rotation matrix
+            rotated = (toRot[0]*math.cos(thet)-toRot[1]*math.sin(thet),-(toRot[0]*math.sin(thet)+toRot[1]*math.cos(thet)))
+
+            #our triangle peak is going to be at our 1/3 origin + rotated point
+            peak = (third[0] + rotated[0], third[1] + rotated[1])
+
+            self.points.insert(index,third)
+            index+=1
+            self.points.insert(index,peak)
+            index+=1
+            self.points.insert(index,twothird)
+            index+=2
+            
+        self.canvas.delete(self.line)
+        self.line = self.canvas.create_line(self.points, width=1, fill="green")
+            
+            
+
+        
