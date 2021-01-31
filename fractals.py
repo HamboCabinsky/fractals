@@ -38,7 +38,7 @@ class Sierpinski:
 class Barnsley:
     def __init__(self, c, x, y, s):
         self.canvas = c
-        self.points = [c.create_oval(x,y,x+3,y+3,fill="red")]
+        self.points = [c.create_oval(x,y,x+3,y+3,fill="red",outline="")]
         self.curr_point = (0,0)
         self.origin = (x,y)
         self.size = s
@@ -51,16 +51,16 @@ class Barnsley:
             new_point = None
             if roll < .73:
                 new_point = (0.85*self.curr_point[0]+0.04*self.curr_point[1], -.04*self.curr_point[0]+0.85*self.curr_point[1] + 48*self.size)
-                self.points += [self.canvas.create_oval(oX+new_point[0], oY-new_point[1], oX+new_point[0]+3, oY-new_point[1]+3,fill="green")]
+                self.points += [self.canvas.create_oval(oX+new_point[0], oY-new_point[1], oX+new_point[0]+3, oY-new_point[1]+3,fill="green",outline="")]
             elif roll > .73 and roll < .76:
                 new_point = (0, 0.16*self.curr_point[1])
-                self.points += [self.canvas.create_oval(oX+new_point[0], oY-new_point[1], oX+new_point[0]+3, oY-new_point[1]+3,fill="red")]
+                self.points += [self.canvas.create_oval(oX+new_point[0], oY-new_point[1], oX+new_point[0]+3, oY-new_point[1]+3,fill="red",outline="")]
             elif roll > .76 and roll < .89:
                 new_point = (-.15*self.curr_point[0]+0.28*self.curr_point[1],0.26*self.curr_point[0]+0.24*self.curr_point[1]+48*self.size)
-                self.points += [self.canvas.create_oval(oX+new_point[0], oY-new_point[1], oX+new_point[0]+3, oY-new_point[1]+3,fill="yellow")]
+                self.points += [self.canvas.create_oval(oX+new_point[0], oY-new_point[1], oX+new_point[0]+3, oY-new_point[1]+3,fill="yellow",outline="")]
             else:
                 new_point = (0.2*self.curr_point[0] - 0.26*self.curr_point[1], 0.23*self.curr_point[0]+0.2*self.curr_point[1]+13.2*self.size)
-                self.points += [self.canvas.create_oval(oX+new_point[0], oY-new_point[1], oX+new_point[0]+3, oY-new_point[1]+3,fill="blue")]
+                self.points += [self.canvas.create_oval(oX+new_point[0], oY-new_point[1], oX+new_point[0]+3, oY-new_point[1]+3,fill="blue",outline="")]
             self.curr_point = new_point
             num_iter -= 1
 
@@ -68,7 +68,7 @@ class Koch:
     def __init__(self, c, width, height):
         self.canvas = c
         self.points = [(50, height/2), (width-50, height/2)]
-        self.line = c.create_line(self.points, width=1, fill="green")
+        self.line = c.create_line(self.points, width=1, fill="cyan")
 
     def step(self):
         index = 1
@@ -98,7 +98,7 @@ class Koch:
             index+=2
             
         self.canvas.delete(self.line)
-        self.line = self.canvas.create_line(self.points, width=1, fill="green")
+        self.line = self.canvas.create_line(self.points, width=1, fill="cyan")
             
             
 
